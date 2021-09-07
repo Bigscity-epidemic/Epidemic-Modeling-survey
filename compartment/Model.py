@@ -5,9 +5,7 @@ from compartment.Graph import Graph
 ERRCODE = {
     'SUCCEED': 0,
     'COMPARTMENT_NAME_NOT_FOUND': 6,
-    'PATH_NAME_NOT_FOUND': 7,
-    'NO_GIVEN_PARAMETER': 8,
-    'NO_GIVEN_EMBEDDING_PARAMETERS': 9
+    'PATH_NAME_NOT_FOUND': 7
 }
 
 
@@ -34,20 +32,21 @@ class Model:
         self.name2compartments[name].value = value
         return ERRCODE['SUCCEED']
 
-    def set_path_parameters(self, pre_name: str, next_name: str, use_embedding: bool, parameter=None, parameters=None):
+    def set_path_exp(self, pre_name: str, next_name: str, exp: str):
         if pre_name not in self.name2compartments.keys() or next_name not in self.name2compartments.keys():
             return ERRCODE['COMPARTMENT_NAME_NOT_FOUND']
         path_name = pre_name + '->' + next_name
         if path_name not in self.name2paths.keys():
             return ERRCODE['PATH_NAME_NOT_FOUND']
         path = self.name2paths[path_name]
-        path.use_embedding = use_embedding
-        if use_embedding and parameters is None:
-            return ERRCODE['NO_GIVEN_EMBEDDING_PARAMETERS']
-        if not use_embedding and parameter is None:
-            return ERRCODE['NO_GIVEN_PARAMETER']
-        if use_embedding:
-            path.set_embedding(parameters)
-        else:
-            path.set_parameter(parameter)
-        return ERRCODE['SUCCEED']
+        return path.set_exp(exp)
+
+    def set_path_parameters(self, pre_name: str, next_name: str, parameter_name: str, parameter: float = None,
+                            embedding: list = None):
+        if pre_name not in self.name2compartments.keys() or next_name not in self.name2compartments.keys():
+            return ERRCODE['COMPARTMENT_NAME_NOT_FOUND']
+        path_name = pre_name + '->' + next_name
+        if path_name not in self.name2paths.keys():
+            return ERRCODE['PATH_NAME_NOT_FOUND']
+        path = self.name2paths[path_name]
+        return path.set_parameters(parameter_name, parameter, embedding)

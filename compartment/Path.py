@@ -18,6 +18,7 @@ class Path:
 
     def set_exp(self, exp: str):
         self.expression = exp
+        return ERRCODE['SUCCEED']
 
     def set_parameters(self, name: str, parameter: float = None, embedding: list = None):
         if name in self.name2parameters.keys():

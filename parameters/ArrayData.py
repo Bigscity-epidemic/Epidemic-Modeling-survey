@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 
 
 class ArrayData:
@@ -8,7 +8,7 @@ class ArrayData:
     area_en = None
     data = []
 
-    def __init__(self, data: list, start_date: date = None, area_zh: str = None, area_en: str = None):
+    def __init__(self, data: list, start_date: datetime.date = None, area_zh: str = None, area_en: str = None):
         self.data = data
         if start_date is not None:
             self.start_date = start_date

@@ -1,5 +1,5 @@
-from executor.formula import formula
-from executor.loss import loss
+from formula import formula
+from loss import loss
 import scipy.integrate as spi
 
 

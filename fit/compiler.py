@@ -43,7 +43,6 @@ def compile_main(model: Model):
         next_name = path.split('>')[1]
         name2prepath[next_name].append(path)
         name2nextpath[pre_name].append(path)
-    print(name2prepath, name2nextpath)
 
     i = 0
     for compartment in compartments:
@@ -95,7 +94,7 @@ def compile_loss(real_value: dict, name2compartments: dict):
 
 
 def compile_optim(compartment: int, parameters: int):
-    head = 'from executor.formula import formula\nfrom executor.loss import loss\nimport scipy.integrate as ' \
+    head = 'from formula import formula\nfrom loss import loss\nimport scipy.integrate as ' \
            'spi\n\n\ndef optim_fun(args):\n    INPUT, t_range, TRUE, kind = args\n'
     python = open('optim.py', 'w', encoding='utf8')
     python.write(head)

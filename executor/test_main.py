@@ -5,7 +5,7 @@ from compartment.Descriptor import vertical_divide, horizontal_divide
 from compartment.Transfer import init_compartment, set_path_exp, set_path_parameters
 from visual.visual_graph import visual_model
 from visual.visual_model_data import visual_compartment_values
-from fit.compiler import compile_main
+from fit.compiler import compile_main, compile_loss
 
 graph = Graph('SEIR', 'S')
 print(vertical_divide(graph, 'S', ['E', 'I', 'R']))
@@ -25,3 +25,4 @@ executor = Executor(model)
 for index in range(360):
     executor.simulate_step(index)
 visual_compartment_values(model)
+compile_loss({'I+R': None, 'R': None}, {'S': 1, 'E': 2, 'I': 3, 'R': 4})

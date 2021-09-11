@@ -53,6 +53,7 @@ def compile_main(model: Model):
             line4 += '- (' + name2paths[path].expression + ') '
         line4 += '  # d' + compartment + r'/dt' + '\n'
         python.write(line4)
+        i += 1
 
     end = '    return Y\n'
     python.write(end)

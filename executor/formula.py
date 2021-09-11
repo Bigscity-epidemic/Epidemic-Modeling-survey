@@ -8,7 +8,7 @@ def formula(INPUT, t, beta, alpha, gamma):
     I = INPUT[2]
     R = INPUT[3]
     Y[0] = - (beta*S*I)   # dS/dt
-    Y[0] = + (beta*S*I) - (alpha*E)   # dE/dt
-    Y[0] = + (alpha*E) - (gamma*I)   # dI/dt
-    Y[0] = + (gamma*I)   # dR/dt
+    Y[1] = + (beta*S*I) - (alpha*E)   # dE/dt
+    Y[2] = + (alpha*E) - (gamma*I)   # dI/dt
+    Y[3] = + (gamma*I)   # dR/dt
     return Y

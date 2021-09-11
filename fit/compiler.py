@@ -1,6 +1,4 @@
 from compartment.Model import Model
-from compartment.Compartment import Compartment
-from compartment.Path import Path
 
 
 def compile_main(model: Model):
@@ -34,4 +32,28 @@ def compile_main(model: Model):
         line3 = '    ' + compartment + ' = INPUT[' + str(index) + ']\n'
         python.write(line3)
         index += 1
-    
+
+    name2prepath = {}
+    name2nextpath = {}
+    for compartment in compartments:
+        name2prepath[compartment] = []
+        name2nextpath[compartment] = []
+    for path in paths:
+        pre_name = path.split('-')[0]
+        next_name = path.split('>')[1]
+        name2prepath[next_name].append(path)
+        name2nextpath[pre_name].append(path)
+    print(name2prepath, name2nextpath)
+
+    i = 0
+    for compartment in compartments:
+        line4 = '    Y[' + str(i) + '] = '
+        for path in name2prepath[compartment]:
+            line4 += '+ (' + name2paths[path].expression + ') '
+        for path in name2nextpath[compartment]:
+            line4 += '- (' + name2paths[path].expression + ') '
+        line4 += '  # d' + compartment + r'/dt' + '\n'
+        python.write(line4)
+
+    end = '    return Y\n'
+    python.write(end)

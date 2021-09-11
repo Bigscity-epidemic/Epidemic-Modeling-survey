@@ -57,6 +57,7 @@ def compile_main(model: Model):
 
     end = '    return Y\n'
     python.write(end)
+    return parameters
 
 
 def compile_loss(real_value: dict, name2compartments: dict):
@@ -91,3 +92,20 @@ def compile_loss(real_value: dict, name2compartments: dict):
     line2 = line2[:-3]
     line2 += ')\n'
     python.write(line2)
+
+
+def compile_optim(compartment: int, parameters: int):
+    head = 'from executor.formula import formula\nfrom executor.loss import loss\nimport scipy.integrate as ' \
+           'spi\n\n\ndef optim_fun(args):\n    INPUT, t_range, TRUE, kind = args\n'
+    python = open('optim.py', 'w', encoding='utf8')
+    python.write(head)
+    tmp1 = ''
+    tmp2 = ''
+    for i in range(compartment):
+        tmp1 += 'INPUT[' + str(i) + '], '
+    tmp1 = tmp1[:-2]
+    for i in range(parameters):
+        tmp2 += 'x[' + str(i) + '], '
+    tmp2 = tmp2[:-2]
+    line = '    v = lambda x: loss(TRUE, spi.odeint(formula, (' + tmp1 + '), t_range, args=(' + tmp2 + ')))\n    return v\n'
+    python.write(line)

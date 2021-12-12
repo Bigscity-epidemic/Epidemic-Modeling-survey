@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>BIGSCity-BRICS COVID19-Modeling Project</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/basis.css"/>
+	<link rel="stylesheet" type="text/css" href="Assets/css/reset.css"/>
+	<script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="Assets/js/js_z.js"></script>
+	<link rel="stylesheet" type="text/css" href="Assets/plugins/FlexSlider/flexslider.css">
+	<script type="text/javascript" src="Assets/plugins/FlexSlider/jquery.flexslider.js"></script>
+	<script type="text/javascript" src="Assets/js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+	<link rel="stylesheet" type="text/css" href="Assets/css/responsive.css">
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/respond.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.sidr.min.js"></script>
+	<script>
+		$(function(){
+		   $('#left-menu').sidr({
+		name: 'sidr-left',
+		side: 'right'
+		    });
+		});
+	</script>
+    <!--[if lt IE 9]>
+	    <script src="js/html5shiv.min.js"></script>
+	    <script src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+	<body>
+		<header>
+			<div class="top-box">
+				<div class="container">
+					<div class="nav-box clearfix">
+						<h1 class="fl logo">
+							<img src="img/logo.png"/>BIGSCity
+						</h1>
+						<div class="nav-ico fr" id="left-menu">
+							<img src="img/nav.png"/>
+						</div>
+						<nav class="fr">
+							<ul class="nav-list clearfix">
+								<li><a href="index.html">Homepage</a></li>
+								<li><a href="ab.html">Project Description</a></li>
+								<li><a href="al.html">Our Team</a></li>
+								<li class="dq"><a href="xw.html">Research Content</a></li>
+								<li><a href="ff.html">Publications</a></li>
+								<li><a href="lx.html">Contact Us</a></li>
+							</ul>
+						</nav>
+					</div>
+					
+				</div>
+			</div>
+			<div class="clearfix xs-nav" id="sidr-left">
+				<ul>
+					<li><a href="index.html">Homepage</a></li>
+					<li><a href="ab.html">Project</a></li>
+					<li><a href="al.html">Our Team</a></li>
+					<li class=""><a href="xw.html">Research Content</a></li>
+					<li><a href="ff.html">Publications</a></li>
+					<li><a href="lx.html">Contact Us</a></li>
+				</ul>
+			</div>
+		</header>
+	    <div class="swiper-container" id="ban">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide">	            	
+				    <img src="img/home1.png"/>
+	            </div>
+	            <div class="swiper-slide">				
+				    <img src="img/home2.png"/>
+	            </div>
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	    </div>
+	    
+		<div class="scd clearfix">
+			<div class="scd_l">
+				<ul class="s_nav">
+					<li><a href="xw.html">Research Content</a><i>&nbsp;</i></li>
+				</ul>
+			</div>
+			<div class="scd_r">
+				<div class="head">Research Content<em></em></div>
+				<div class="s_ctn">
+					<div class="about">
+						<div style="border-top:1px solid #ddd; padding-top:30px; font-size:14px; color:#777;">
+							<li><a href="https://github.com/Bigscity-epidemic/Epidemic-Modeling-survey">Open-sources Epidemic Modeling Framework</a></li>
+							<p style="margin-bottom:50px; text-indent:2em;">A Framework for users who cannot finish the coding about BigData-based epidemic models. In this framework, users can construct the compartments, embedding the external big data and finally execute the model, evaluating and visualizing the results.</p>
+							<li><a href="https://github.com/Bigscity-epidemic/Bigscity-epidemic-survey-paperlist">Paperlist of COVID-19 Modeling Papers</a></li>
+							<p style="margin-bottom:50px; text-indent:2em;">In the paper collection, we collected papers about epidemic modeling on COVID-19 published on 3 top journals, namely, Nature, Science and PNAS. We will continue to update the collection, and add papers on NEJM, Lancet and JAMA.</p>
+							<li><a href="http://covid19-report.com/">Visualization Map of Our Model's Results about Epidemic Prediction and Simulation</a></li>
+							<p style="margin-bottom:50px; text-indent:2em;">The software mainly includes 4 parts: obtaining data, generating prediction results, calculating and analyzing results, and visualizing display. Among them, the first three parts are developed and run under the windows10 system. After obtaining the results of the first three parts, the data is sent to the fourth part and combined with the arcgis platform for visual display. The first three parts are mainly developed in python language, and the fourth part is mainly developed in javascript and vue. Software development is streamlined, extensible, and highly portable. On the x86-win10 platform, deployment and one-click operation can be carried out relatively easily.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	   
+	   
+	    
+	    
+	    
+	    
+		
+		
+		
+	    <script>
+		    var swiper = new Swiper('#ban', {
+		        pagination: '.swiper-pagination',
+		        paginationClickable: true
+		    });
+		</script>	
+	</body>
+</html>

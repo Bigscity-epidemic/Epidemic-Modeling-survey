@@ -1,0 +1,94 @@
+@media screen and (max-width:1220px){
+.f_bg .f_m , .f_bg .bq_bg .bq , .i_solution , .pro_m , .header .head , .scd{width:960px;}
+.head .nav{ margin-left:50px; width:595px;}
+.head .nav li{ margin-right:0px;}
+.head .nav li a{ padding:0 22px;}
+.solution li{ width:229px; margin-right:14px;}
+.service li .tu{ width:140px; height:140px;}
+.pro_l li{ width:304px;}
+.banner_s img{ width:2550px; height:300px;}
+.solution dl dd{ width:490px;}
+.s_ctn .pro_l li img{ width:227px; height:130px;}
+.service_a dt , .service_a dt img{ width:330px; height:192px;}
+.service_a dd{ width:350px;}
+}
+@media screen and (max-width:980px){
+.f_bg .f_m , .f_bg .bq_bg .bq , .i_solution , .pro_m , .header .head , .scd{width:740px; margin:0px auto;}
+.head .nav{ margin-left:20px; width:415px;}
+.head .nav li{ margin-right:0px;}
+.head .nav li a{ padding:0 10px; font-size:15px;}
+.head .logo{ width:164px;}
+.head .logo img{ width:164px; height:42px;}
+.solution li{ width:174px;}
+.solution li .l_up{ height:205px;}
+.solution li .l_up .tu , .solution li .l_up .tu img{ width:109px; height:78px;}
+.solution li .l_dn{ height:173px;}
+.solution li .l_up .title{ font-size:15px;}
+.solution li .l_dn p{ font-size:13px;}
+.service li .tu{ width:120px; height:120px;}
+.service li .name{ font-size:18px; margin-bottom:15px;}
+.pro_l li{ width:240px; margin-right:10px;}
+.pro_l li .name{ font-size:16px;}
+.pro_l li p{ font-size:13px;}
+.f_bg .f_m .code{ margin-left:20px; padding-left:20px;}
+.f_bg .f_m .f_mr{ width:55%;}
+.f_m .f_mr .num img{ width:40px; height:40px;}
+.f_m .f_mr .num em{ font-size:26px;}
+.scd .scd_l{ width:190px;}
+.solution dl dt , .solution dl dt img{ width:120px; height:120px;}
+.solution dl dd{ width:340px;}
+.banner_s img{ width:150%; height:auto; margin:0px !important; margin-left:-18% !important;}
+.s_ctn .pro_l li{ width:48%;}
+.service_a dt{ float:none; margin:0px auto; margin-bottom:50px;}
+.service_a dt, .service_a dt img{ width:373px; height:217px;}
+.service_a dd{ width:100%; float:none; clear:both; margin:0px;}
+.sv_l li{ height:220px; margin-bottom:0px;}
+.contact_m ul li{ width:100%; float:none; margin:0px; margin-bottom:30px;}
+}
+@media screen and (max-width:770px) {
+.f_bg .f_m , .f_bg .bq_bg .bq , .i_solution , .pro_m , .header .head , .scd , .service{width:480px; margin:0px auto;}
+.head .nav{ display:none;}
+.head .nav_m{ display:block;}
+.header .head{ position:relative; height:auto;}
+.header .head .logo{ margin-bottom:20px;}
+.head .search{ margin-right:80px; margin-top:30px;}
+.head .nav_m{ clear:both; margin-top:30px;}
+.solution li{ width:226px; margin-bottom:25px;}
+.fw .fw_bg{ display:none;}
+.fw{ height:auto; border:0px;}
+.pro_l li{ width:460px; margin-bottom:15px;}
+.f_bg .f_m .f_mr{ width:100%; float:none; clear:both; padding-top:20px; text-align:left; border-top:1px solid #47494F;}
+.f_m .f_mr .line{ float:left;}
+.f_m .f_mr .num{ margin-top:15px;}
+.f_bg .f_m .code{ margin-bottom:20px;}
+.f_bg .f_m{ padding-bottom:20px;}
+.f_bg .bq_bg .bq span{ float:none; width:100%; text-align:left; display:block; margin-top:10px;}
+.scd .scd_l{ width:470px; height:auto !important; float:none;}
+.scd .scd_r{ width:100% !important; float:none; margin-top:30px;}
+.solution dl dd{ width:310px;}
+.solution dl dd h5 a{ font-size:18px;}
+}
+@media screen and (max-width:500px) {
+.f_bg .f_m , .f_bg .bq_bg .bq , .i_solution , .pro_m , .header .head , .scd , .service{width:320px; margin:0px auto;}
+.header .head .logo{ width:100%; float:none; margin-bottom:15px;}
+.head .search{ float:left; margin-top:0px; margin-bottom:20px;}
+.nav_m .n_icon{ top:-40px;}
+.box_h .title{ width:160px; font-size:20px;}
+.box_h .line{ width:80px;}
+.box_h .line_l{ left:-80px;}
+.box_h .line_r{ right:-80px;}
+.solution li{ width:320px; margin-right:0px;}
+.pro_l li{ width:320px;}
+.f_m .f_mr .num img{ width:30px; height:30px; margin:0 2px;}
+.f_m .f_mr .num em{ font-size:22px; vertical-align:top; margin-top:-5px;}
+.scd .scd_l{ width:300px;}
+.solution dl dd{ width:100%; margin-right:0px;}
+.solution dl dt{ float:none; margin:0px auto; margin-bottom:15px;}
+.solution dl dd h5 , .solution dl dd .more{ text-align:center;}
+.s_ctn .pro_l li{ width:98%;}
+.s_ctn .pro_l li img{ width:300px; height:172px;}
+.service_a dt, .service_a dt img{ width:310px; height:180px;}
+.service_a dd .more{ text-align:center;}
+.sv_l li{ width:48%; height:180px;}
+.sv_l li b{ font-size:18px;}
+}

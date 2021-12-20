@@ -1,6 +1,6 @@
 
 
-class PeopleData:
+class ProfileData:
     area_zh = None
     area_en = None
     time = None

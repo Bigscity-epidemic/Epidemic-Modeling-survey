@@ -5,13 +5,10 @@ from parameters.ArrayData import ArrayData
 
 
 def get_oxford_government_response(start_date: datetime.date, length: int, area_en: str):
-    out = 'oxford/oxford_government_response.csv'
+    out = 'datasets/oxford_government_response.csv'
     url = 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/government_response_index.csv'
-    if not os.path.exists(out) or not os.path.exists('log/' + datetime.date.today().strftime('%Y-%m-%d') + '.oxford'):
-        if os.path.exists(out):
-            os.remove(out)
+    if not os.path.exists(out):
         wget.download(url, out)
-        log = open('log/' + datetime.date.today().strftime('%Y-%m-%d') + '.oxford', 'w')
     file = open(out)
     file.readline()
     for line in file.readlines():
@@ -26,11 +23,3 @@ def get_oxford_government_response(start_date: datetime.date, length: int, area_
             return ArrayData(data_float, start_date, area_en=area_en)
     return None
 
-
-def clear_oxford_log():
-    files = []
-    for file in os.walk('log/'):
-        files = file[2]
-    for filename in files:
-        if filename.split('.')[-1] == 'oxford':
-            os.remove('log/' + filename)

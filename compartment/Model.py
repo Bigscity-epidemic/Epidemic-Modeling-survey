@@ -50,3 +50,11 @@ class Model:
             return ERRCODE['PATH_NAME_NOT_FOUND']
         path = self.name2paths[path_name]
         return path.set_parameters(parameter_name, parameter, embedding)
+
+    def get_values(self):
+        result = {}
+        for name in self.name2compartments.keys():
+            compartment = self.name2compartments[name]
+            value = compartment.value
+            result[name] = value
+        return result

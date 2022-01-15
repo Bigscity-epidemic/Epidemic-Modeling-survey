@@ -7,7 +7,7 @@ from visual.visual_graph import visual_model
 from visual.visual_model_data import visual_compartment_values
 
 graph = Graph('basic_SEIR', 'S1')
-poi_nums = 3
+poi_nums = 5
 meta = []
 for i in range(2, poi_nums + 1):
     meta.append('S' + str(i))

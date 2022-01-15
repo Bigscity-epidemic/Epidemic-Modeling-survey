@@ -3,8 +3,6 @@ from compartment.Model import Model
 from executor.Executor import Executor
 from compartment.Descriptor import vertical_divide
 from compartment.Transfer import init_compartment, set_path_exp, set_path_parameters
-from math import log10
-from matplotlib import pyplot as plt
 from visual.visual_value_line import plot_line
 from utils.get_logindex import get_logindex
 

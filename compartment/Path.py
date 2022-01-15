@@ -2,7 +2,8 @@ ERRCODE = {
     'SUCCEED': 0,
     'DUPLICATED_PARAMETER_NAME': 8,
     'BOTH_SINGLE_AND_EMBEDDING': 9,
-    'NOT_SINGLE_NOR_EMBEDDING': 10
+    'NOT_SINGLE_NOR_EMBEDDING': 10,
+    'NO_SUCH_PARAMETER': 11
 }
 
 
@@ -33,3 +34,10 @@ class Path:
             return ERRCODE['SUCCEED']
         else:
             return ERRCODE['BOTH_SINGLE_AND_EMBEDDING']
+
+    def reset_parameters(self, name: str, parameter: float):
+        if name not in self.name2parameters.keys():
+            return ERRCODE['NO_SUCH_PARAMETER']
+        else:
+            self.name2parameters[name] = ['single', parameter]
+            return ERRCODE['SUCCEED']

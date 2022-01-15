@@ -5,7 +5,8 @@ from compartment.Graph import Graph
 ERRCODE = {
     'SUCCEED': 0,
     'COMPARTMENT_NAME_NOT_FOUND': 6,
-    'PATH_NAME_NOT_FOUND': 7
+    'PATH_NAME_NOT_FOUND': 7,
+    'NO_SUCH_PARAMETER': 11
 }
 
 
@@ -58,3 +59,11 @@ class Model:
             value = compartment.value
             result[name] = value
         return result
+
+    def reset_parameters(self, parameter_name: str, parameter: float):
+        for name in self.name2paths.keys():
+            path = self.name2paths[name]
+            r = path.reset_parameters(parameter_name, parameter)
+            if r == ERRCODE['SUCCEED']:
+                return r
+        return ERRCODE['NO_SUCH_PARAMETER']

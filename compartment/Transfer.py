@@ -20,3 +20,7 @@ def set_path_exp(model: Model, pre_name: str, next_name: str, exp: str):
 def set_path_parameters(model: Model, pre_name: str, next_name: str, parameter_name: str, parameter: float = None,
                         embedding: list = None):
     return model.set_path_parameters(pre_name, next_name, parameter_name, parameter, embedding)
+
+
+def reset_parameters(model: Model, parameter_name: str, parameter: float):  # use for self-feedback models
+    return model.reset_parameters(parameter_name, parameter)

@@ -3,8 +3,10 @@ from compartment.Model import Model
 from executor.Executor import Executor
 from compartment.Descriptor import vertical_divide
 from compartment.Transfer import init_compartment, set_path_exp, set_path_parameters
-from visual.visual_graph import visual_model
-from visual.visual_model_data import visual_compartment_values
+from math import log10
+from matplotlib import pyplot as plt
+from visual.visual_value_line import plot_line
+from utils.get_logindex import get_logindex
 
 graph = Graph('basic_SEIR', 'S')
 print(vertical_divide(graph, 'S', ['E', 'I', 'R']))
@@ -28,7 +30,6 @@ print(set_path_parameters(model, 'I', 'R', 'gamma', 1.0 / 5.0))
 init_value = {'S': population - init_exposed - init_infectious - init_removed, 'E': init_exposed, 'I': init_infectious,
               'R': init_removed}
 print(init_compartment(model, init_value))
-visual_compartment_values(model)
 executor = Executor(model)
 values = model.get_values()
 for name in values.keys():
@@ -38,4 +39,14 @@ for index in range(days):
     tmp_value = model.get_values()
     for name in values.keys():
         values[name].append(tmp_value[name])
-print(values)
+comfirm_pred = [15.0]
+for i in range(100):
+    comfirm_pred.append(comfirm_pred[-1] + values['I'][i] / 14.0)
+values['C'] = comfirm_pred
+plot_line(values,log=True)
+
+lambdac = get_logindex(values['C'])[0:60]
+lambdai = get_logindex(values['I'])[0:60]
+
+lambda_value = {'C': lambdac, 'I': lambdai}
+plot_line(lambda_value)

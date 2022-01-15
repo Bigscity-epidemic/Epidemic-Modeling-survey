@@ -1,6 +1,7 @@
 # pycharm
 .idea/
 .VSCodeCounter/
+examples/origin/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

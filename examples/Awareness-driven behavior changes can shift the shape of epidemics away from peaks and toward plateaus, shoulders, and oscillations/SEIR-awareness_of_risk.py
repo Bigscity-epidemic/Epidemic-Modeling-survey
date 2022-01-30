@@ -32,7 +32,6 @@ init_death = 0.0
 init_susceptible = population - init_exposed - init_infectious - init_death
 
 Dday0 = gamma*init_infectious*frac_D
-
 Iday0 = beta*init_susceptible*init_infectious/(1+Dday0/Dcrit)**awareness
 
 print(set_path_exp(model, 'S', 'E', 'beta*S*I'))

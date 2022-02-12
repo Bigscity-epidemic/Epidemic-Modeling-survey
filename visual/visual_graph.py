@@ -28,5 +28,10 @@ def visual_model(model: Model):
     G.add_edges_from(edge_list)
 
     plt.figure(figsize=(8, 8))
-    nx.draw(G, with_labels=True)
+    pos = nx.planar_layout(G, scale=2)
+    nx.draw(G, pos,
+            cmap=plt.cm.tab10,
+            font_color="#FFFFFF",
+            node_color=range(10, len(G.nodes) + 10),
+            font_size=15, node_size=2000, with_labels=True)
     plt.show()

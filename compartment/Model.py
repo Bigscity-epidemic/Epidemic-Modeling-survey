@@ -16,6 +16,8 @@ class Model:
     name2paths = {}
 
     def __init__(self, name: str, graph: Graph):
+        self.name2compartments = {}
+        self.name2paths = {}
         self.name = name
         for node_name in graph.name2node.keys():
             compartment = Compartment(graph.name2node[node_name], 0.0)

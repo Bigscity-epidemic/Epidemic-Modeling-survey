@@ -13,6 +13,7 @@ class Graph:
     name2node = {}
 
     def __init__(self, model_name:str, init_compartment_name:str):
+        self.name2node = {}
         self.name = model_name
         init_node = Node(init_compartment_name)
         self.name2node[init_compartment_name] = init_node

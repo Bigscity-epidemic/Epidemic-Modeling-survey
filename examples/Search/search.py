@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 from examples.SEIR_base_eqs.SEIR_base_eqs import get_SEIR_base_eqs
 from examples.SEIR_eqs.SEIR_eqs import get_SEIR_eqs
@@ -52,6 +53,18 @@ def search(TRUE, INPUT, PARAMS):
     PREDS.append(simulate(model_SEIR, days))
     loss = -1
     res = []
+    plt.figure()
+    print(PREDS)
+    plt.plot(PREDS[0][:, 2], label='SIR', color='r', ls='--', lw=2)
+    plt.plot(PREDS[1][:, 2], label='SIR_base', color='b', ls='--', lw=2)
+    plt.plot(PREDS[2][:, 2], label='SEIR', color='g', ls='--', lw=2)
+    plt.plot(PREDS[3][:, 2], label='SEIR_base', color='y', ls='--', lw=2)
+    plt.plot(TRUE[:, 0] - TRUE[:, 1], label='actual_data', lw=2, color='black')
+    plt.legend()
+    plt.ylim([0, 1.2e8])
+    plt.ylabel("total infect cases / person")
+    plt.xlabel("time / day")
+    plt.show()
     for PRED in PREDS:
         if loss == -1:
             loss = loss_func(TRUE, PRED)
@@ -82,6 +95,6 @@ if __name__ == '__main__':
  [425077781.0, 354800619.0]])
     INPUT = [500000000, 66018812.0, 75263568.0, 337354007.0]
     population = INPUT[0] + INPUT[1] + INPUT[2] + INPUT[3]
-    PRAMAS = [1000, 9e-7, 0.3, 9e-2, 1000/population]
+    PRAMAS = [1e-6*population, 9e-7, 0.3, 3e-2, 0.05]
     print(search(TRUE, INPUT, PRAMAS))
 

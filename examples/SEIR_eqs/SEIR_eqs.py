@@ -17,7 +17,6 @@ def get_SEIR_eqs(INPUT, Lambda, beta, epsilon, gamma, mu):
     add_path(graph, 'I', 'D0')
     add_path(graph, 'R', 'D0')
     model = Model('SEIR_eqs', graph)
-    visual_model(model)
     S0 = 2147483647
     S = INPUT[0]
     E = INPUT[1]

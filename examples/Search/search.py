@@ -5,6 +5,7 @@ from examples.SEIR_base_eqs.SEIR_base_eqs import get_SEIR_base_eqs
 from examples.SEIR_eqs.SEIR_eqs import get_SEIR_eqs
 from examples.SIR_base_eqs.SIR_base_eqs import get_SIR_base_eqs
 from examples.SIR_eqs.SIR_eqs import get_SIR_eqs
+
 from executor.Executor import Executor
 from visual.visual_graph import visual_model
 

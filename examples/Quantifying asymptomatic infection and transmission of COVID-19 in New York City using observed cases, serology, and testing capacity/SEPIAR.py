@@ -176,5 +176,4 @@ with open(r".\observed_data_N_12.csv") as c:
             data.append(float(i[0]))
         index += 1
 result.update({'observed daily cases': data})
-# 对照 Appendix figure 11 似乎降得快了一些...改天再dedebug
 plot_line(result, log=False)

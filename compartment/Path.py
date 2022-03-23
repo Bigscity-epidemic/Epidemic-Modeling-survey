@@ -14,6 +14,8 @@ class Path:
     name2parameters = {}
 
     def __init__(self, pre_name: str, next_name: str):
+        self.expression = ''
+        self.name2parameters = {}
         self.pre_name = pre_name
         self.next_name = next_name
 

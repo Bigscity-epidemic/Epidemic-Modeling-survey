@@ -11,26 +11,31 @@ def get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, 
     set_path_exp(model, 'Income', 'I', 'income')
     set_path_parameters(model, 'Income', 'I', 'income', income)
 
-    set_path_exp(model, 'S', 'E', 'betaI*I*S*n+betaP*P*S*n')
+    set_path_exp(model, 'S', 'E', 'betaI*I*S*n+betaP*P*S*n+betaasym*Is_ct*S*n+betaasym*A*S*n')
     set_path_parameters(model, 'S', 'E', 'betaI', r0)
     set_path_parameters(model, 'S', 'E', 'betaP', 0.55 * r0)
+    set_path_parameters(model, 'S', 'E', 'betaasym', 0.1 * r0)
     set_path_parameters(model, 'S', 'E', 'n', 1.0 / popu)
 
     set_path_exp(model, 'E', 'P', 'gamma*E*nocontact')
     set_path_parameters(model, 'E', 'P', 'gamma', 1.0 / hidden)
     set_path_parameters(model, 'E', 'P', 'nocontact', 1.0 - contact_ratio)
 
-    set_path_exp(model, 'E', 'Is', 'gamma*E*contact')
-    set_path_parameters(model, 'E', 'Is', 'gamma', 1.0 / hidden)
+    set_path_exp(model, 'E', 'Is', 'E*contact')
     set_path_parameters(model, 'E', 'Is', 'contact', contact_ratio)
 
-    set_path_exp(model, 'P', 'I', 'alpha*P*sym')
+    set_path_exp(model, 'P', 'I', 'alpha*P*sym*nocontact')
     set_path_parameters(model, 'P', 'I', 'alpha', 1.0 / infect)
     set_path_parameters(model, 'P', 'I', 'sym', sym_ratio)
+    set_path_parameters(model, 'P', 'I', 'nocontact', 1.0 - contact_ratio)
 
-    set_path_exp(model, 'P', 'A', 'alpha*P*asym')
+    set_path_exp(model, 'P', 'A', 'alpha*P*asym*nocontact')
     set_path_parameters(model, 'P', 'A', 'alpha', 1.0 / infect)
     set_path_parameters(model, 'P', 'A', 'asym', 1.0 - sym_ratio)
+    set_path_parameters(model, 'P', 'A', 'nocontact', 1.0 - contact_ratio)
+
+    set_path_exp(model, 'P', 'Is', 'P*contact')
+    set_path_parameters(model, 'P', 'Is', 'contact', contact_ratio)
 
     set_path_exp(model, 'I', 'Is', 'confirm*I*noct')
     set_path_parameters(model, 'I', 'Is', 'confirm', 1.0 / confirm)

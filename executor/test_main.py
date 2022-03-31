@@ -24,6 +24,7 @@ visual_compartment_values(model)
 confirm_truth = [model.name2compartments['I'].value + model.name2compartments['R'].value]
 remove_truth = [model.name2compartments['R'].value]
 
+
 executor = Executor(model)
 for index in range(360):
     executor.simulate_step(index)

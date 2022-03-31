@@ -14,7 +14,6 @@ def get_eqs():
     add_path(graph, 'E', 'Is')
     add_path(graph, 'Income', 'I')
     model = Model('SEIR_eqs', graph)
-    visual_model(model)
     return model
 
 

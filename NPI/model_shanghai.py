@@ -5,7 +5,7 @@ from matplotlib.font_manager import *
 import datetime as dt
 import json
 
-settings = json.load(open('settings.json', encoding='utf8'))
+settings = json.load(open('settings-shh.json', encoding='utf8'))
 r0 = settings['r0']
 infect = settings['患病者口罩比例']
 suscept = settings['易感人群口罩比例']
@@ -42,7 +42,7 @@ for compartment in values.keys():
 
 # 平均期望，在检测周期中均匀的出现初始病例
 history = int(settings['高风险人群检测周期'] / 2.0)
-future = 60
+future = 30
 
 # 历史自由传播阶段
 for index in range(history):
@@ -111,28 +111,31 @@ for i in range(len(series['S'])):
     cfm.append(series['Is'][i] + series['A'][i] + series['Is_ct'][i] + series['R'][i])
 
 myfont = FontProperties(fname='./simhei.ttf', size=14)
-t_range_subdt = [dt.date.today() + dt.timedelta(days=-history) + dt.timedelta(days=x) for x in range(365)]
+t_range_subdt = [dt.date.today() + dt.timedelta(days=-30) + dt.timedelta(days=-history) + dt.timedelta(days=x) for x in
+                 range(365)]
 disp_days = history + future - 1
 plt.figure(figsize=(8, 6))
+plt.yscale('log')
 plt.plot(t_range_subdt[1:][:disp_days], [ac[i + 1] - ac[i] for i in range(len(ac) - 1)][:disp_days], 'b+-')
 plt.plot(t_range_subdt[:len(cfm)][1:], [cfm[i + 1] - cfm[i] for i in range(len(cfm) - 1)], 'k.-')
 plt.grid("True")
 plt.legend(["日新增感染数预测", '日新增确诊数预测'], prop=myfont)
-plt.title(u'{} 日新增预测结果 (数据截止 {})'.format('某地区', '某时间'), FontProperties=myfont)
+plt.title(u'上海'.format('某地区', '某时间'), FontProperties=myfont)
 plt.xlabel('Date')
 plt.ylabel('Case')
 plt.gcf().autofmt_xdate()
 # plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
 plt.show()
-
+"""
 plt.figure(figsize=(8, 6))
 plt.plot(t_range_subdt[0:][:disp_days], ac[:disp_days], 'b+-')
 plt.plot(t_range_subdt[:len(cfm)][0:], cfm, 'k.-')
 plt.grid("True")
 plt.legend(["累计感染数预测", '累计确诊数预测'], prop=myfont)
-plt.title(u'10000人封闭环境-60天疫情扩散-1天1检测新政策-放宽检测标准推演结果'.format('某地区', '某时间'), FontProperties=myfont)
+plt.title(u'上海'.format('某地区', '某时间'), FontProperties=myfont)
 plt.xlabel('Date')
 plt.ylabel('Case')
 plt.gcf().autofmt_xdate()
 # plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
 plt.show()
+"""

@@ -13,7 +13,9 @@ def get_eqs():
     graph.add_single_node('Income')
     add_path(graph, 'E', 'Is')
     add_path(graph, 'Income', 'I')
+    add_path(graph,'P','Is')
     model = Model('SEIR_eqs', graph)
+    visual_model(model)
     return model
 
 

@@ -54,7 +54,7 @@ def get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, 
     set_path_exp(model, 'A', 'R', 'remove_A*A')
     set_path_parameters(model, 'A', 'R', 'remove_A', 1.0 / remove)
 
-    init_value = {'S': s0, 'E': 0.0, 'P': 0.0, 'I': i0, 'Is_ct': 0.0, 'Is': 0.0, 'A': 0.0, 'R': 0.0, 'Income': inf}
+    init_value = {'S': s0, 'E': 10.0*i0, 'P': 3.0*i0, 'I': i0, 'Is_ct': 0.0, 'Is': 0.0, 'A': 0.0, 'R': 0.0, 'Income': inf}
     init_compartment(model, init_value)
     return model
 

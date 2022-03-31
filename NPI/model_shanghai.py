@@ -9,7 +9,9 @@ settings = json.load(open('settings-shh.json', encoding='utf8'))
 r0 = settings['r0']
 infect = settings['患病者口罩比例']
 suscept = settings['易感人群口罩比例']
-r0 *= 1.0 - (infect * suscept * 0.01 + infect * (1.0 - suscept) * 0.4 + (1.0 - infect) * suscept * 0.4)
+print(r0)
+r0 *= 1.0 - (infect * suscept * 0.99 + infect * (1.0 - suscept) * 0.6 + (1.0 - infect) * suscept * 0.6)
+print(r0)
 if settings['疫苗基础VEI'] != 0:
     modify = settings['疫苗VEI修正'].split(',')
     ratio = settings['疫苗接种率'].split(',')
@@ -19,7 +21,7 @@ if settings['疫苗基础VEI'] != 0:
         tmp += float(modify[i]) * float(ratio[i])
     vei *= tmp
     r0 *= 1.0 - vei
-
+print(r0)
 hidden = settings['hidden_latency']
 infect = settings['infect_latency']
 confirm = settings['confirm_latency']
@@ -55,7 +57,7 @@ for index in range(history):
 
 ## 综合社交距离响应等级
 if settings['基础响应等级'] == 2:
-    r0 *= 0.15
+    r0 *= 0.8
 elif settings['基础响应等级'] == 3:
     r0 *= 0.05
 else:
@@ -106,21 +108,60 @@ for index in range(future):
 print(series)
 ac = []
 cfm = []
+asymcfm = []
 for i in range(len(series['S'])):
     ac.append(series['E'][i] + series['P'][i] + series['I'][i] + series['Is'][i] + series['R'][i])
-    cfm.append(series['Is'][i] + series['A'][i] + series['Is_ct'][i] + series['R'][i])
+    cfm.append(series['Is'][i] + series['I'][i] + series['Is_ct'][i] + series['R'][i])
+    asymcfm.append(series['Is'][i] + series['A'][i] + series['Is_ct'][i] + series['R'][i])
 
 myfont = FontProperties(fname='./simhei.ttf', size=14)
 t_range_subdt = [dt.date.today() + dt.timedelta(days=-30) + dt.timedelta(days=-history) + dt.timedelta(days=x) for x in
                  range(365)]
 disp_days = history + future - 1
+
+truth = open('data_sh_since31.csv', encoding='utf8')
+confirm_truth = [ 0, 0, 0]
+infect_truth = [0, 0, 0]
+sum_truth = [0,  0, 0]
+for line in truth.readlines():
+    confirm_truth.append(float(line.split(',')[1]))
+    infect_truth.append(float(line.split(',')[2]))
+    sum_truth.append(confirm_truth[-1] + infect_truth[-1])
+
 plt.figure(figsize=(8, 6))
 plt.yscale('log')
-plt.plot(t_range_subdt[1:][:disp_days], [ac[i + 1] - ac[i] for i in range(len(ac) - 1)][:disp_days], 'b+-')
-plt.plot(t_range_subdt[:len(cfm)][1:], [cfm[i + 1] - cfm[i] for i in range(len(cfm) - 1)], 'k.-')
+plt.plot(t_range_subdt[1:][:disp_days], [asymcfm[i + 1] - asymcfm[i] for i in range(len(asymcfm) - 1)][:disp_days],
+         'b+-')
+plt.plot(t_range_subdt[:len(cfm)][1:], infect_truth, 'k.-')
 plt.grid("True")
-plt.legend(["日新增感染数预测", '日新增确诊数预测'], prop=myfont)
-plt.title(u'上海'.format('某地区', '某时间'), FontProperties=myfont)
+plt.legend(["日新增无症状预测", '日新增无症状数'], prop=myfont)
+plt.title(u'无症状'.format('某地区', '某时间'), FontProperties=myfont)
+plt.xlabel('Date')
+plt.ylabel('Case')
+plt.gcf().autofmt_xdate()
+# plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
+plt.show()
+
+plt.figure(figsize=(8, 6))
+plt.yscale('log')
+plt.plot(t_range_subdt[0:][:disp_days + 1], [cfm[i + 1] - cfm[i] for i in range(len(cfm) - 1)], 'b+-')
+plt.plot(t_range_subdt[:len(cfm)][1:], confirm_truth, 'k.-')
+plt.grid("True")
+plt.legend(["日新增确诊数预测", '日新增确诊数'], prop=myfont)
+plt.title(u'确诊'.format('某地区', '某时间'), FontProperties=myfont)
+plt.xlabel('Date')
+plt.ylabel('Case')
+plt.gcf().autofmt_xdate()
+# plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
+plt.show()
+
+plt.figure(figsize=(8, 6))
+plt.yscale('log')
+plt.plot(t_range_subdt[0:][:disp_days + 1], [ac[i + 1] - ac[i] for i in range(len(ac) - 1)], 'b+-')
+plt.plot(t_range_subdt[:len(ac)][1:], sum_truth, 'k.-')
+plt.grid("True")
+plt.legend(["日新增总感染规模预测", '日新增无症状+确诊数'], prop=myfont)
+plt.title(u'总感染'.format('某地区', '某时间'), FontProperties=myfont)
 plt.xlabel('Date')
 plt.ylabel('Case')
 plt.gcf().autofmt_xdate()

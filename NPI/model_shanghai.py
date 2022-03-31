@@ -110,9 +110,9 @@ ac = []
 cfm = []
 asymcfm = []
 for i in range(len(series['S'])):
-    ac.append(series['E'][i] + series['P'][i] + series['I'][i] + series['Is'][i] + series['R'][i])
-    cfm.append(series['Is'][i] + series['I'][i] + series['Is_ct'][i] + series['R'][i])
-    asymcfm.append(series['Is'][i] + series['A'][i] + series['Is_ct'][i] + series['R'][i])
+    ac.append(series['E'][i] + series['P'][i] + series['I'][i] + series['A'][i] + series['Is'][i] + series['R'][i])
+    cfm.append(series['Is'][i] + series['I'][i] + series['R'][i])
+    asymcfm.append(series['Is'][i] + series['A'][i] + series['R'][i])
 
 myfont = FontProperties(fname='./simhei.ttf', size=14)
 t_range_subdt = [dt.date.today() + dt.timedelta(days=-30) + dt.timedelta(days=-history) + dt.timedelta(days=x) for x in
@@ -120,9 +120,9 @@ t_range_subdt = [dt.date.today() + dt.timedelta(days=-30) + dt.timedelta(days=-h
 disp_days = history + future - 1
 
 truth = open('data_sh_since31.csv', encoding='utf8')
-confirm_truth = [ 0, 0, 0]
+confirm_truth = [0, 0, 0]
 infect_truth = [0, 0, 0]
-sum_truth = [0,  0, 0]
+sum_truth = [0, 0, 0]
 for line in truth.readlines():
     confirm_truth.append(float(line.split(',')[1]))
     infect_truth.append(float(line.split(',')[2]))

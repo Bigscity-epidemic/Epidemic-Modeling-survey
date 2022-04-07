@@ -1,3 +1,9 @@
+import datetime
+
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.font_manager import FontProperties
+
 from compartment.Graph import Graph
 from compartment.Model import Model
 from executor.Executor import Executor
@@ -97,6 +103,7 @@ if __name__ == '__main__':
         cases.append(
             values1['I'][i] + values1['IS'][i] + values1['R'][i] - values1['I'][i - 1] - values1['IS'][i - 1] - values1['R'][
                 i - 1])
+
     # part2
     S = 7482000
     E = 587460.0
@@ -133,5 +140,36 @@ if __name__ == '__main__':
         cases.append(
             values2['I'][i] + values2['IS'][i] + values2['R'][i] - values2['I'][i - 1] - values2['IS'][i - 1] - values2['R'][
                 i - 1])
-    result = {'simulate daily cases': cases, 'daily cases': data}
-    plot_line(result)
+    result = {'预测日新增确诊数': cases, '实际日新增确诊数': data}
+
+    true = [0]*len(cases)
+    up = [0]*len(cases)
+    ratio = 1.0
+    ratio_up = 1.0
+    for time in range(history_length, len(cases)):
+        new = cases[time]
+        new *= ratio
+        ratio *= 0.975
+        true[time] = true[time - 1] + new
+        new = cases[time]
+        new *= ratio_up
+        ratio_up *= 1.025
+        up[time] = up[time - 1] + new
+    print(true)
+    print(up)
+    disp_days = history_length + future_length - 1
+    t_range_subdt = [datetime.date.today() + datetime.timedelta(days=-history_length) + datetime.timedelta(days=x) for x
+                     in
+                     range(1, disp_days)]
+    myfont = FontProperties(fname='./simhei.ttf', size=14)
+    plt.title(u'{} 日新增确诊数预测结果 (数据截止 {})'.format('香港', '2022-03-07'), fontproperties=myfont)
+    plt.plot(t_range_subdt[:disp_days], result['预测日新增确诊数'], 'b+-', label="预测日新增确诊数")
+    plt.plot(t_range_subdt[:history_length-1], result['实际日新增确诊数'], 'k.-', label='实际日新增确诊数')
+    plt.fill_between(t_range_subdt[history_length:disp_days], np.diff(true[history_length-1:disp_days]), np.diff(up[history_length-1:disp_days]),
+                     color='lightskyblue',
+                     alpha=0.35, label='95%置信区间')
+    plt.legend(prop=myfont)
+    plt.xlabel('日期', fontproperties=myfont)
+    plt.ylabel('确诊人数', fontproperties=myfont)
+    plt.grid()
+    plt.show()

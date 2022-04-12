@@ -33,6 +33,7 @@ class Executor:
                             term_value *= path.name2parameters[variable][1]
                         else:
                             term_value *= path.name2parameters[variable][1][index]
+
                 i = j
                 value += term_value
 

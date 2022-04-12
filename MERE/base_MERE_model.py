@@ -54,13 +54,13 @@ def get_model(r0, confirm, remove, hospital, icu, sym_ratio, recover_ratio, seve
 
 if __name__ == '__main__':
     # natural reproduce
-    r0 = 1.2
+    r0 = 1.0
     # days from P to I
     confirm = 3.0
     # days from I/A to R
     remove = 7.0
     # ratio between I/A
-    sym_ratio = 1.0
+    sym_ratio = 0.1
     # ratio between R/H
     recover_ratio = 0.7
     # days in hospital average

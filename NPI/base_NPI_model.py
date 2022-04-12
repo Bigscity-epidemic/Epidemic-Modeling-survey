@@ -12,9 +12,9 @@ def get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, 
     set_path_parameters(model, 'Income', 'I', 'income', income)
 
     set_path_exp(model, 'S', 'E', 'betaI*I*S*n+betaP*P*S*n+betaasym*Is_ct*S*n+betaasym*A*S*n')
-    set_path_parameters(model, 'S', 'E', 'betaI', r0)
-    set_path_parameters(model, 'S', 'E', 'betaP', 0.55 * r0)
-    set_path_parameters(model, 'S', 'E', 'betaasym', 0.1 * r0)
+    set_path_parameters(model, 'S', 'E', 'betaI', 0.1 * r0)
+    set_path_parameters(model, 'S', 'E', 'betaP', r0)
+    set_path_parameters(model, 'S', 'E', 'betaasym', 0.2 * r0)
     set_path_parameters(model, 'S', 'E', 'n', 1.0 / popu)
 
     set_path_exp(model, 'E', 'P', 'gamma*E*nocontact')
@@ -54,7 +54,8 @@ def get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, 
     set_path_exp(model, 'A', 'R', 'remove_A*A')
     set_path_parameters(model, 'A', 'R', 'remove_A', 1.0 / remove)
 
-    init_value = {'S': s0, 'E': 10.0*i0, 'P': 3.0*i0, 'I': i0, 'Is_ct': 0.0, 'Is': 0.0, 'A': 0.0, 'R': 0.0, 'Income': inf}
+    init_value = {'S': s0, 'E': 10.0 * i0, 'P': 3.0 * i0, 'I': i0, 'Is_ct': 0.0, 'Is': 0.0, 'A': 0.0, 'R': 0.0,
+                  'Income': inf}
     init_compartment(model, init_value)
     return model
 

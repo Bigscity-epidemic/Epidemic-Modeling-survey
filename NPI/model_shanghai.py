@@ -44,7 +44,7 @@ for compartment in values.keys():
 
 # 平均期望，在检测周期中均匀的出现初始病例
 history = int(settings['高风险人群检测周期'] / 2.0)
-future = 30
+future = 120
 
 # 历史自由传播阶段
 for index in range(history):
@@ -83,6 +83,7 @@ for index in range(future):
     ## 全民核酸检测
     if settings['全员核酸周期'] == 0:
         if str(index) in settings['全员核酸计划'].keys():
+            model.reset_parameters('alpha', 0.1 / infect)
             tmp = model.name2compartments['I'].value * settings['全员核酸计划'][str(index)]
             model.name2compartments['I'].value -= tmp
             model.name2compartments['Is'].value += tmp
@@ -110,9 +111,9 @@ ac = []
 cfm = []
 asymcfm = []
 for i in range(len(series['S'])):
-    ac.append(series['E'][i] + series['P'][i] + series['I'][i] + series['A'][i] + series['Is'][i] + series['R'][i])
-    cfm.append(series['Is'][i] + series['I'][i] + series['R'][i])
-    asymcfm.append(series['Is'][i] + series['A'][i] + series['R'][i])
+    ac.append(series['I'][i] + series['A'][i] + series['Is'][i] + series['R'][i])
+    cfm.append(series['Is'][i] * 0.1 + series['I'][i] + series['R'][i] * 0.1)
+    asymcfm.append(series['Is'][i] * 0.9 + series['A'][i] + series['R'][i] * 0.9)
 
 myfont = FontProperties(fname='./simhei.ttf', size=14)
 t_range_subdt = [dt.date.today() + dt.timedelta(days=-30) + dt.timedelta(days=-history) + dt.timedelta(days=x) for x in
@@ -127,12 +128,11 @@ for line in truth.readlines():
     confirm_truth.append(float(line.split(',')[1]))
     infect_truth.append(float(line.split(',')[2]))
     sum_truth.append(confirm_truth[-1] + infect_truth[-1])
-
+"""
 plt.figure(figsize=(8, 6))
-plt.yscale('log')
 plt.plot(t_range_subdt[1:][:disp_days], [asymcfm[i + 1] - asymcfm[i] for i in range(len(asymcfm) - 1)][:disp_days],
          'b+-')
-plt.plot(t_range_subdt[:len(cfm)][1:], infect_truth, 'k.-')
+plt.plot(t_range_subdt[:34][1:], infect_truth, 'k.-')
 plt.grid("True")
 plt.legend(["日新增无症状预测", '日新增无症状数'], prop=myfont)
 plt.title(u'无症状'.format('某地区', '某时间'), FontProperties=myfont)
@@ -143,9 +143,8 @@ plt.gcf().autofmt_xdate()
 plt.show()
 
 plt.figure(figsize=(8, 6))
-plt.yscale('log')
 plt.plot(t_range_subdt[0:][:disp_days + 1], [cfm[i + 1] - cfm[i] for i in range(len(cfm) - 1)], 'b+-')
-plt.plot(t_range_subdt[:len(cfm)][1:], confirm_truth, 'k.-')
+plt.plot(t_range_subdt[:34][1:], confirm_truth, 'k.-')
 plt.grid("True")
 plt.legend(["日新增确诊数预测", '日新增确诊数'], prop=myfont)
 plt.title(u'确诊'.format('某地区', '某时间'), FontProperties=myfont)
@@ -154,16 +153,28 @@ plt.ylabel('Case')
 plt.gcf().autofmt_xdate()
 # plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
 plt.show()
-
+"""
 plt.figure(figsize=(8, 6))
 plt.yscale('log')
 plt.plot(t_range_subdt[0:][:disp_days + 1], [ac[i + 1] - ac[i] for i in range(len(ac) - 1)], 'b+-')
-plt.plot(t_range_subdt[:len(ac)][1:], sum_truth, 'k.-')
+plt.plot(t_range_subdt[:34][1:], sum_truth, 'k.-')
 plt.grid("True")
-plt.legend(["日新增总感染规模预测", '日新增无症状+确诊数'], prop=myfont)
-plt.title(u'总感染'.format('某地区', '某时间'), FontProperties=myfont)
-plt.xlabel('Date')
-plt.ylabel('Case')
+plt.legend(["日新增无症状+确诊规模预测", '日新增无症状+确诊数'], prop=myfont)
+plt.title(u'上海市无症状+确诊病例预测结果（对数坐标）'.format('某地区', '某时间'), FontProperties=myfont)
+plt.xlabel('日期')
+plt.ylabel('病例数')
+plt.gcf().autofmt_xdate()
+# plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
+plt.show()
+
+plt.figure(figsize=(8, 6))
+plt.plot(t_range_subdt[0:][:disp_days + 1], [ac[i + 1] - ac[i] for i in range(len(ac) - 1)], 'b+-')
+plt.plot(t_range_subdt[:34][1:], sum_truth, 'k.-')
+plt.grid("True")
+plt.legend(["日新增无症状+确诊规模预测", '日新增无症状+确诊数'], prop=myfont)
+plt.title(u'上海市无症状+确诊病例预测结果'.format('某地区', '某时间'), FontProperties=myfont)
+plt.xlabel('日期')
+plt.ylabel('病例数')
 plt.gcf().autofmt_xdate()
 # plt.savefig('{}_dailynew_confirmed_day{}.jpg'.format('香港', disp_days), dpi=200)
 plt.show()

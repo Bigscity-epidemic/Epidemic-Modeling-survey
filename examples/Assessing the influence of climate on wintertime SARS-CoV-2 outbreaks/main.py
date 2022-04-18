@@ -3,9 +3,9 @@ import pandas as pd
 from SIRS import *
 from datetime import datetime
 #read file
-NYcases = pd.read_csv("NYcases.csv", encoding='utf8')
-NYq = pd.read_csv("NYq.csv", encoding='utf8')
-NYestimR = pd.read_csv("NYestimR.csv", encoding='utf8')
+NYcases = pd.read_csv("Data/NYcases.csv", encoding='utf8')
+NYq = pd.read_csv("Data/NYq.csv", encoding='utf8')
+NYestimR = pd.read_csv("Data/NYestimR.csv", encoding='utf8')
 
 
 #init value

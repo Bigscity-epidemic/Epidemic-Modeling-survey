@@ -29,7 +29,7 @@ R0min = 1.5
 R0max = 2.5
 Immunity = 66.25*7
 Var = -227.5
-SHAT = pd.read_csv("NYq.csv")['x']
+SHAT = pd.read_csv("Data/NYq.csv")['x']
 pop = population
 
 def runModel(Lead, R0list, SSet = 'Orig', ISet = 'Orig', Rchange = 1):

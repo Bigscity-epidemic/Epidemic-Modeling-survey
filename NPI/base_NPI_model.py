@@ -85,6 +85,7 @@ if __name__ == '__main__':
     model = get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, contact_ratio, s0, i0)
     executor = Executor(model)
     values = model.get_values()
+
     print(values)
 
     for index in range(10):

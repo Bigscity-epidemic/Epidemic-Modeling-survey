@@ -36,7 +36,7 @@ q = [0] * 13 + [0.062] * 67
 set_path_exp(model, 'S', 'C', 'q*S')
 set_path_parameters(model, 'S', 'C', 'q', embedding=q)
 set_path_exp(model, 'C', 'S', 'p*C')
-set_path_parameters(model, 'S', 'C', 'p', p)
+set_path_parameters(model, 'C', 'S', 'p', p)
 set_path_exp(model, 'S', 'I', 'beta*S*I')
 set_path_parameters(model, 'S', 'I', 'beta', beta / N)
 set_path_exp(model, 'I', 'D', 'mu*I')

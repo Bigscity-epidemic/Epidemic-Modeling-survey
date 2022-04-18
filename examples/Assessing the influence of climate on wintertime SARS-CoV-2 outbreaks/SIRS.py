@@ -35,11 +35,12 @@ pop = population
 def runModel(Lead, R0list, SSet = 'Orig', ISet = 'Orig', Rchange = 1):
     qout = SHAT
     if(Lead == 0):
-        qout = np.array([x for x in qout for i in range(7)])
+        qout = np.array(qout,7)
     else:
-        qout = np.array([x for x in qout for i in range(7)])
+        qout = np.array(qout,7)
         qout = np.concatenate((qout[Lead-1:], qout[:Lead-1]), axis = 0)
-    qout = np.repeat(qout, days)
+
+    qout = np.tile(qout, days/len(qout)+1)
     R0 = np.exp(Var*qout + np.log(R0max - R0min)) + R0min
     R0 = R0 * Rchange
 

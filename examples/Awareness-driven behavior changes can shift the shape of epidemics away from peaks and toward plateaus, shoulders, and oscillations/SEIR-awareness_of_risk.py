@@ -42,7 +42,7 @@ print(set_path_exp(model, 'I', 'R', 'gammaR*I'))
 print(set_path_parameters(model, 'I', 'R', 'gammaR', gamma * (1 - frac_D)))
 print(set_path_exp(model, 'I', 'D', 'gammaD*I'))
 print(set_path_parameters(model, 'I', 'D', 'gammaD', gamma * frac_D))
-
+visual_model(model)
 init_value = {
     'S': init_susceptible / N,
     'E': init_exposed / N,

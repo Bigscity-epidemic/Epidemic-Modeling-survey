@@ -27,4 +27,6 @@ init_compartment(model, init_value)
 executor = Executor(model)
 for index in range(5):
     executor.simulate_step(index)
+    print('_______________________________________')
+    print('day {}'.format(index + 1))
     visual_compartment_values(model)

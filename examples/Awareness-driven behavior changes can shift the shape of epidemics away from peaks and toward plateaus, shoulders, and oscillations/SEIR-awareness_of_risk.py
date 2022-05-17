@@ -19,11 +19,11 @@ mu = 0.5
 gamma = 1/6
 frac_D = 0.01
 R0 = beta / gamma
-Dcrit = 10**(-5)
-awareness = 2.0
 N = 10**7
+Dcrit = 500 / N  # Dcrit can be 5 25 50 200 500 / N
+awareness = 2.0  # awareness = k can be 1, 2, 4
 
-days = 400
+days = 200
 population = N
 init_exposed = 1.0
 init_infectious = 0.0
@@ -65,9 +65,9 @@ for index in range(days):
     Dday = gamma * tmp_value['I'] * frac_D
     Iday = beta * tmp_value['S'] * tmp_value['I'] / (1 + (Dday / Dcrit) ** awareness)
     Ddays.append(Dday*N)
-    Dq.append(N*Dcrit*(R0**(1/awareness)-1)*2)
+    Dq.append(N*Dcrit*((R0-1)**(1/awareness)))
     Idays.append(Iday*N)
-    Iq.append(N*Dcrit*(R0**(1/awareness)-1)*2/frac_D)
+    Iq.append(N*Dcrit/frac_D*(R0-1)**(1/awareness))
     print(reset_parameters(model, 'beta', beta / (1 + (Dday / Dcrit) ** awareness)))
     executor.simulate_step(index)
     for name in values.keys():

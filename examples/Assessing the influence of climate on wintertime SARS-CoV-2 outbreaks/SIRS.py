@@ -32,6 +32,9 @@ Var = -227.5
 SHAT = pd.read_csv("Data/NYq.csv")['x']
 pop = population
 
+
+
+
 def runModel(Lead, R0list, SSet = 'Orig', ISet = 'Orig', Rchange = 1):
     qout = SHAT
     if(Lead == 0):

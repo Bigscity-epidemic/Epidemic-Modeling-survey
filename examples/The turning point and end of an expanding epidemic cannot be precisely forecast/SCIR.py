@@ -6,6 +6,7 @@ from compartment.Transfer import init_compartment, set_path_exp, set_path_parame
 from visual.visual_value_line import plot_line
 from visual.visual_graph import visual_model
 from visual.visual_model_data import visual_compartment_values
+import pandas as pd
 
 graph = Graph('SCIR', 'S')
 print(vertical_divide(graph, 'S', ['C']))
@@ -16,8 +17,8 @@ print(add_path(graph, 'C', 'S'))
 model = Model('SCIR', graph)
 
 
-N = 1000000  # 初始人数
-S_0 = N  # 初始S舱室人数
+N = 45000000  # 初始人数
+S_0 = N - 1  # 初始S舱室人数
 C_0 = 0
 I_0 = 1
 R_0 = 0
@@ -27,16 +28,17 @@ days = 80
 
 q = 0.062  # 封城系数
 p = 0.007  # 解除封城系数
-beta = 0.425  # 感染系数
+beta = 0.43  # 感染系数
 mu = 0  # 致死系数
 r = 0.021  # 治愈系数
-
-q = [0] * 13 + [0.062] * 67
-
+p = [0] * 11 + [0.007] * 69
+q = [0] * 11 + [0.062] * 69
+print(p)
+print(q)
 set_path_exp(model, 'S', 'C', 'q*S')
 set_path_parameters(model, 'S', 'C', 'q', embedding=q)
 set_path_exp(model, 'C', 'S', 'p*C')
-set_path_parameters(model, 'C', 'S', 'p', p)
+set_path_parameters(model, 'C', 'S', 'p', embedding=p)
 set_path_exp(model, 'S', 'I', 'beta*S*I')
 set_path_parameters(model, 'S', 'I', 'beta', beta / N)
 set_path_exp(model, 'I', 'D', 'mu*I')
@@ -69,3 +71,6 @@ for index in range(days):
 visual_compartment_values(model)
 result = {'Active Cases': values['I']}
 plot_line(result, log=True)
+
+df = pd.DataFrame(values)
+df.to_csv("MyResult/result.csv")

@@ -19,7 +19,7 @@ print(horizontal_divide(graph, 'I_S_2', ['I_H']))
 print(vertical_divide(graph, 'I_S_2', ['R_F']))
 print(vertical_divide(graph, 'I_H', ['R_H']))
 model = Model('SEPIAR', graph)
-visual_model(model)
+#visual_model(model)
 
 # 默认参数，见 NYC_COVID_DATA_SEIAR_and_SEPIAR.Rmd
 phi_E = 1.09 # 迷惑参数

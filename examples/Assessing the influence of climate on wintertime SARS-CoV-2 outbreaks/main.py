@@ -39,7 +39,6 @@ for j in range(len(RChangeVar)):
         RChangeUse = RChangeVar[j]
 
         predNPI = runModel(lead_time, NYestimR['Median(R)'], ISet=ISetStart,SSet='Orig', Rchange=RChangeUse)
-
         ratio = np.mean(predNPI['I'][:len(casesI)])/np.mean(casesI)
         casesI = casesI * ratio
 
@@ -51,33 +50,38 @@ for j in range(len(RChangeVar)):
         WinterI = [t for t in ts if t > 1.75 and t < 2.25 ]
         maxWinterIClim = max(WinterI)/popuse
         SizeClimWinterI[i,j] = maxWinterIClim
-        I[0:end_data_time-1] = 0
+        for x in range(end_data_time):
+            I[x] = 0
         index = np.where(I == np.max(I[:708]))[0]
         if len(index) > 0: index = index[0]
         timeMax = ts[index]
-        TimingClimWinterI[i,j] = timeMax
+        TimingClimWinterI[i, j] = timeMax
 
         # run the model under constant scenario
-        R0equivclim = predNPI['I'][lead_time + NYestimR.shape[0]]
+        R0equivclim = predNPI['R0'][lead_time + NYestimR.shape[0]]
+        print(predNPI['R0'][:210])
         R0listNew = np.concatenate((NYestimR['Median(R)'], np.repeat(R0equivclim,2000)), axis=0)[:2000]
-
-        predConstant = runModel(lead_time, R0listNew, ISet=ISetStart,SSet='Orig',)
-
+        exit(0)
+        predConstant = runModel(lead_time, R0listNew, ISet=ISetStart, SSet='Orig')
         ts = np.arange(1, 10, 1 / 364)[1:len(predNPI['I'])]
         I = predConstant['I']
+        print(predConstant)
         WinterI = [t for t in ts if t > 1.75 and t < 2.25]
         maxWinterIConst = max(WinterI) / popuse
         SizeWinterI[i, j] = maxWinterIConst
-        I[0:end_data_time - 1] = 0
+        for x in range(end_data_time):
+            I[x] = 0
         index = np.where(I == np.max(I[:708]))[0]
-        if len(index) > 0: index = index[0]
+        exit(0)
+        if len(index) > 0:
+            index = index[0]
         timeMax = ts[index]
         TimingWinterI[i, j] = timeMax
-
-np.savetxt("./Result/SizeClimWinterI.csv", SizeClimWinterI, delimiter=",")
-np.savetxt("./Result/SizeWinterI.csv", SizeWinterI, delimiter=",")
-np.savetxt("./Result/TimingClimWinterI.csv", TimingClimWinterI, delimiter=",")
-np.savetxt("./Result/TimingWinterI.csv", TimingWinterI, delimiter=",")
+        print(timeMax)
+np.savetxt("./MyResult/SizeClimWinterI.csv", SizeClimWinterI, delimiter=",")
+np.savetxt("./MyResult/SizeWinterI.csv", SizeWinterI, delimiter=",")
+np.savetxt("./MyResult/TimingClimWinterI.csv", TimingClimWinterI, delimiter=",")
+np.savetxt("./MyResult/TimingWinterI.csv", TimingWinterI, delimiter=",")
 
 
 

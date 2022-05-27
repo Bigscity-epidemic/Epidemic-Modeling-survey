@@ -11,7 +11,6 @@ graph = Graph('SEIR-awareness_of_risk', 'S')
 print(vertical_divide(graph, 'S', ['E', 'I', 'R']))
 print(horizontal_divide(graph, 'R', ['D']))
 model = Model('SEIR-awareness_of_risk', graph)
-visual_model(model)
 
 # figseir_baseplat.m
 beta = 0.5
@@ -20,10 +19,10 @@ gamma = 1/6
 frac_D = 0.01
 R0 = beta / gamma
 N = 10**7
-Dcrit = 500 / N  # Dcrit can be 5 25 50 200 500 / N
-awareness = 2.0  # awareness = k can be 1, 2, 4
+Dcrit = 50 / N  # Dcrit can be 5 25 50 200 500 / N
+awareness = 1.0  # awareness = k can be 1, 2, 4
 
-days = 200
+days = 400
 population = N
 init_exposed = 1.0
 init_infectious = 0.0
@@ -51,7 +50,6 @@ init_value = {
     'D': init_death / N
 }
 print(init_compartment(model, init_value))
-visual_compartment_values(model)
 executor = Executor(model)
 values = model.get_values()
 Ddays = []
@@ -72,8 +70,19 @@ for index in range(days):
     executor.simulate_step(index)
     for name in values.keys():
         values[name].append(tmp_value[name]*N)
-visual_compartment_values(model)
 resultI = {'Infectious / day': Idays, 'Infection rate plateau': Iq}
-plot_line(resultI, log=False)
+from matplotlib import pyplot as plt
+plt.figure()
+if True:
+    plt.plot(Idays,label='Infectious / day', color='blue',linestyle = 'solid')
+    plt.plot(Iq, label='Infection rate plateau', color='blue',linestyle = 'dashed')
+plt.legend()
+plt.show()
 resultD = {'Deaths / day': Ddays, 'Fatality rate plateau': Dq}
-plot_line(resultD, log=False)
+from matplotlib import pyplot as plt
+plt.figure()
+if True:
+    plt.plot(Ddays, label='Deaths / day', color='black', linestyle='solid')
+    plt.plot(Dq, label='Fatality rate plateau', color='black', linestyle='dashed')
+plt.legend()
+plt.show()

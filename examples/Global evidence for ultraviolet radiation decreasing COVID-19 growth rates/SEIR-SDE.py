@@ -7,6 +7,8 @@ from visual.visual_value_line import plot_line
 import numpy as np
 from math import exp, sin, pi
 from random import random, randint
+import pandas as pd
+from matplotlib import pyplot as plt
 
 graph = Graph('basic_SEIR', 'S')
 print(vertical_divide(graph, 'S', ['E', 'I', 'R']))
@@ -34,7 +36,7 @@ print(set_path_exp(model, 'E', 'I', 'sigma'))
 print(set_path_parameters(model, 'E', 'I', 'sigma', sigma))
 print(set_path_exp(model, 'I', 'R', 'gamma'))
 print(set_path_parameters(model, 'I', 'R', 'gamma', gamma))
-init_value = {'S': population - init_exposed - init_infectious - init_removed, 'E': init_exposed, 'I': init_infectious,
+init_value = {'S': population, 'E': init_exposed, 'I': init_infectious,
               'R': init_removed}
 print(init_compartment(model, init_value))
 
@@ -59,6 +61,20 @@ comfirm_pred = [15.0]
 for i in range(100):
     comfirm_pred.append(comfirm_pred[-1] + values['I'][i] / 14.0)
 values['C'] = comfirm_pred
-plot_line(values, log=True)
-
+#plot_line(values, log=True)
+plt.figure()
+if True:
+    plt.yscale('log')
+    plt.plot(values['S'],label='S', color='yellow')
+    plt.plot(values['E'], label='E', color='pink')
+    plt.plot(values['I'], label='I', color='blue')
+    plt.plot(values['R'], label='R', color='red')
+    plt.plot(values['C'], label='C', color='black')
+# for name in values:
+#     plt.plot(values[name], label=name, linestyle = linestyle)
+plt.legend()
+plt.show()
 plot_line({'beta': betasin})
+df = pd.DataFrame(values)
+df.to_csv("MyResult/SEIR_SDE.csv")
+

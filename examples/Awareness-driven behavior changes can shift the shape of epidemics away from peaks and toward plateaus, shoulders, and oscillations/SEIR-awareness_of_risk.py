@@ -11,7 +11,6 @@ graph = Graph('SEIR-awareness_of_risk', 'S')
 print(vertical_divide(graph, 'S', ['E', 'I', 'R']))
 print(horizontal_divide(graph, 'R', ['D']))
 model = Model('SEIR-awareness_of_risk', graph)
-visual_model(model)
 
 # figseir_baseplat.m
 beta = 0.5
@@ -19,9 +18,9 @@ mu = 0.5
 gamma = 1/6
 frac_D = 0.01
 R0 = beta / gamma
-Dcrit = 10**(-5)
-awareness = 2.0
 N = 10**7
+Dcrit = 50 / N  # Dcrit can be 5 25 50 200 500 / N
+awareness = 1.0  # awareness = k can be 1, 2, 4
 
 days = 400
 population = N
@@ -51,7 +50,6 @@ init_value = {
     'D': init_death / N
 }
 print(init_compartment(model, init_value))
-visual_compartment_values(model)
 executor = Executor(model)
 values = model.get_values()
 Ddays = []
@@ -65,15 +63,26 @@ for index in range(days):
     Dday = gamma * tmp_value['I'] * frac_D
     Iday = beta * tmp_value['S'] * tmp_value['I'] / (1 + (Dday / Dcrit) ** awareness)
     Ddays.append(Dday*N)
-    Dq.append(N*Dcrit*(R0**(1/awareness)-1)*2)
+    Dq.append(N*Dcrit*((R0-1)**(1/awareness)))
     Idays.append(Iday*N)
-    Iq.append(N*Dcrit*(R0**(1/awareness)-1)*2/frac_D)
+    Iq.append(N*Dcrit/frac_D*(R0-1)**(1/awareness))
     print(reset_parameters(model, 'beta', beta / (1 + (Dday / Dcrit) ** awareness)))
     executor.simulate_step(index)
     for name in values.keys():
         values[name].append(tmp_value[name]*N)
-visual_compartment_values(model)
 resultI = {'Infectious / day': Idays, 'Infection rate plateau': Iq}
-plot_line(resultI, log=False)
+from matplotlib import pyplot as plt
+plt.figure()
+if True:
+    plt.plot(Idays,label='Infectious / day', color='blue',linestyle = 'solid')
+    plt.plot(Iq, label='Infection rate plateau', color='blue',linestyle = 'dashed')
+plt.legend()
+plt.show()
 resultD = {'Deaths / day': Ddays, 'Fatality rate plateau': Dq}
-plot_line(resultD, log=False)
+from matplotlib import pyplot as plt
+plt.figure()
+if True:
+    plt.plot(Ddays, label='Deaths / day', color='black', linestyle='solid')
+    plt.plot(Dq, label='Fatality rate plateau', color='black', linestyle='dashed')
+plt.legend()
+plt.show()

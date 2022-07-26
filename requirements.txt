@@ -4,3 +4,9 @@ numpy~=1.19.5
 pandas~=1.2.2
 scipy~=1.6.1
 wget~=3.2
+pytorch==1.5.1
+pytorch-geometric==1.5.0
+networkx==1.11
+sklearn
+fbprophet==
+pystan=2.19.1.1

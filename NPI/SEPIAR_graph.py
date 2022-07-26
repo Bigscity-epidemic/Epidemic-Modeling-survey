@@ -20,3 +20,4 @@ def get_eqs():
 
 if __name__ == '__main__':
     model = get_eqs()
+    visual_model(model)

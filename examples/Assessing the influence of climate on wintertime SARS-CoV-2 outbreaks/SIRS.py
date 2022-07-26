@@ -32,47 +32,57 @@ Var = -227.5
 SHAT = pd.read_csv("Data/NYq.csv")['x']
 pop = population
 
+
+
+
 def runModel(Lead, R0list, SSet = 'Orig', ISet = 'Orig', Rchange = 1):
     qout = SHAT
     if(Lead == 0):
-        qout = np.array(qout,7)
+        qout = np.repeat(qout, 7)
     else:
-        qout = np.array(qout,7)
+        qout = np.repeat(qout, 7)
         qout = np.concatenate((qout[Lead-1:], qout[:Lead-1]), axis = 0)
-
-    qout = np.tile(qout, days/len(qout)+1)
+    qout = np.tile(qout, int(days/len(qout))+1)
     R0 = np.exp(Var*qout + np.log(R0max - R0min)) + R0min
     R0 = R0 * Rchange
 
-    R0[:len(R0list)] = R0list
+    for i in range(len(R0list)):
+        R0[i] = R0list[i]
 
     beta = [R / (D * pop) for R in R0]
+    x= 0
+    for b in beta:
+        x+=1
+        if b > 1e-5:
+            print(x)
+            exit(0)
+    if(SSet == 'Orig'):
+        S0 = pop -1
+    else:
+        S0 = pop * SSet
+    if type(ISet) == str and ISet == 'Orig':
+        I0 = 1
+    else:
+        I0 = ISet
+        S0 = S0 - I0
 
-    I0 = 1 if SSet == 'Orig' else ISet
-    S0 = 1 if type(ISet) == str and ISet == 'Orig' else (pop * ISet - I0)
-    R0 = pop - S0 - I0
+    R0_ = pop - S0 - I0
 
-    input = [S0, I0, R0]
 
+    input = [S0, I0, R0_]
     model = get_SIRS(input, beta)
 
     executor = Executor(model)
 
-    values_S = [S0]
-    values_I = [I0]
-    values_R = [R0]
-
+    values = model.get_values()
+    for name in values.keys():
+        values[name] = [values[name]]
     for index in range(days):
         executor.simulate_step(index)
-        value_tmp  = model.get_values()
-        values_S.append(value_tmp['S'])
-        values_I.append(value_tmp['I'])
-        values_R.append(value_tmp['R'])
-    values_S = np.diff(values_S)
-    values_I = np.diff(values_I)
-    values_R = np.diff(values_R)
-
-    values = {'S':values_S,'I':values_I,'R':values_R}
+        tmp_value = model.get_values()
+        for name in values.keys():
+            values[name].append(tmp_value[name])
+    values['R0'] = R0
     return values
 
 def get_SIRS(INPUT, beta):

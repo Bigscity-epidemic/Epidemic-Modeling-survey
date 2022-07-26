@@ -15,9 +15,12 @@ def get_eqs():
     add_path(graph, 'H', 'R')
     add_path(graph, 'Icu', 'H')
     model = Model('SEIR_eqs', graph)
+    visual_model(model)
     return model
 
 
 if __name__ == '__main__':
     model = get_eqs()
     visual_model(model)
+
+

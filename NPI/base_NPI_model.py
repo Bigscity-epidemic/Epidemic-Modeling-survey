@@ -1,6 +1,7 @@
 from executor.Executor import Executor
 from NPI.SEPIAR_graph import get_eqs
 from compartment.Transfer import set_path_exp, set_path_parameters, init_compartment
+from visual.visual_graph import visual_model
 
 
 def get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, contact_ratio, s0, i0):
@@ -85,6 +86,7 @@ if __name__ == '__main__':
     model = get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, contact_ratio, s0, i0)
     executor = Executor(model)
     values = model.get_values()
+    visual_model(model)
 
     print(values)
 

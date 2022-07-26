@@ -82,3 +82,12 @@ if __name__ == '__main__':
         executor.simulate_step(index)
         values = model.get_values()
         print(values)
+
+    set_path_parameters(model, 'S', 'E', 'beta', 0.3)
+    set_path_parameters(model, 'S', 'E', 'popu', 1.0 / 1000000)
+    set_path_parameters(model, 'E', 'I', 'alpha', 0.14)
+    set_path_parameters(model, 'I', 'R', 'gamma', 0.2)
+
+    set_path_exp(model, 'S', 'E', 'beta*S*I*popu')
+    set_path_exp(model, 'E', 'I', 'alpha*E')
+    set_path_exp(model, 'I', 'R', 'gamma*I')

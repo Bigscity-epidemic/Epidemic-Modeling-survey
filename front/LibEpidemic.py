@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QGraphicsScene, QInputDialog, QLineEdit
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+        MainWindow.setObjectName("LibEpidemic Simulator Tool Version0.1")
         MainWindow.resize(1200, 900)
         MainWindow.setAccessibleName("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -73,13 +73,13 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "TextLabel"))
-        self.pushButton.setText(_translate("MainWindow", "OK"))
-        self.label_2.setText(_translate("MainWindow", "TextLabel"))
-        self.menubarbar.setAccessibleName(_translate("MainWindow", "New"))
-        self.menu.setTitle(_translate("MainWindow", "File"))
-        self.actionNew_Model.setText(_translate("MainWindow", "New Model"))
-        self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionOpen_Model.setText(_translate("MainWindow", "Open Model"))
-        self.actionQuit.setText(_translate("MainWindow", "Quit"))
+        MainWindow.setWindowTitle(_translate("LibEpidemic Simulator Tool Version0.1", "LibEpidemic Simulator Tool Version0.1"))
+        self.label.setText(_translate("LibEpidemic Simulator Tool Version0.1", ""))
+        self.pushButton.setText(_translate("LibEpidemic Simulator Tool Version0.1", "OK"))
+        self.label_2.setText(_translate("LibEpidemic Simulator Tool Version0.1", "Label"))
+        self.menubarbar.setAccessibleName(_translate("LibEpidemic Simulator Tool Version0.1", "New"))
+        self.menu.setTitle(_translate("LibEpidemic Simulator Tool Version0.1", "File"))
+        self.actionNew_Model.setText(_translate("LibEpidemic Simulator Tool Version0.1", "New Model"))
+        self.actionSave.setText(_translate("LibEpidemic Simulator Tool Version0.1", "Save"))
+        self.actionOpen_Model.setText(_translate("LibEpidemic Simulator Tool Version0.1", "Open Model"))
+        self.actionQuit.setText(_translate("LibEpidemic Simulator Tool Version0.1", "Quit"))

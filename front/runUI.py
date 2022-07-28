@@ -189,7 +189,7 @@ class MyWindow(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == '__main__':
-    sir_preset = False
+    sir_preset = True
     app = QApplication(sys.argv)
     exe = ExeUI()
     code, model, param = exe.send_message({'handle': 'init', 'init_name': 'S'})

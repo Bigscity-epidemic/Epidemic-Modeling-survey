@@ -5,7 +5,6 @@ from compartment.Descriptor import vertical_divide, horizontal_divide
 from compartment.Transfer import init_compartment, set_path_exp, set_path_parameters
 from visual.visual_graph import visual_model
 from visual.visual_model_data import visual_compartment_values
-from fit.fit_main import fit_main
 import numpy as np
 
 graph = Graph('SEIR', 'S')
@@ -31,4 +30,4 @@ for index in range(360):
     confirm_truth.append(model.name2compartments['I'].value + model.name2compartments['R'].value)
     remove_truth.append(model.name2compartments['R'].value)
 visual_compartment_values(model)
-fit_main(model, {'I+R': None, 'R': None})
+

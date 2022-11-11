@@ -65,7 +65,4 @@ class Model:
     def reset_parameters(self, parameter_name: str, parameter: float):
         for name in self.name2paths.keys():
             path = self.name2paths[name]
-            r = path.reset_parameters(parameter_name, parameter)
-            if r == ERRCODE['SUCCEED']:
-                return r
-        return ERRCODE['NO_SUCH_PARAMETER']
+            path.reset_parameters(parameter_name, parameter)

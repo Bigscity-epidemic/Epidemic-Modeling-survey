@@ -37,6 +37,8 @@ class Executor:
                 i = j
                 value += term_value
 
+            if self.model.name2compartments[pre_name].value <= value:
+                value = self.model.name2compartments[pre_name].value
             self.model.name2compartments[pre_name].value -= value
             path2value[pathname] = value
         for pathname in path2value.keys():

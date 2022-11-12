@@ -7,7 +7,12 @@ class Executor:
     def __init__(self, model: Model):
         self.model = model
 
-    def simulate_step(self, index: int):
+    def simulate_step(self, index: int, probe_compartments=None):
+        probe_results = {}
+        if probe_compartments is not None:
+            for compartment_name in probe_compartments:
+                probe_results[compartment_name] = 0.0
+
         path2value = {}
         for pathname in self.model.name2paths.keys():
             pre_name = pathname.split('-')[0]
@@ -44,3 +49,8 @@ class Executor:
         for pathname in path2value.keys():
             next_name = pathname.split('>')[1]
             self.model.name2compartments[next_name].value += path2value[pathname]
+
+            if next_name in probe_results.keys():
+                probe_results[next_name] += path2value[pathname]
+
+        return probe_results

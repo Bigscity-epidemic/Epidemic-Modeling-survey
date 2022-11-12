@@ -2,6 +2,8 @@ from OHEI_base_area_age import get_ages, get_areas
 from OHEI_init_population import get_population
 from OHEI_contact import get_contact, get_contact_modify
 from OHEI_mobility_policy import get_mobility, get_policy
+from OHEI_GDP import get_gdp
+from OHEI_vaccine_plan import get_vaccine_plan
 from model import get_model
 from executor.Executor import Executor
 from json import load
@@ -15,12 +17,13 @@ def dataloader_OHEI_model(age_group=16):
     init_vaccine = load(open('settings/init_vaccine.json', encoding='utf8'))
     mobility = get_mobility()
     policy = get_policy()
-    return popu, epi_non_area_time, contact, init_vaccine, mobility, policy
+    gdp = get_gdp()
+    return popu, epi_non_area_time, contact, init_vaccine, mobility, policy, gdp
 
 
 def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_time, contact, mobility, policy,
-                       init_vaccine, age_group=16, verbose_load=False, verbose_modify=False, verbose_simulation=False,
-                       simulation_disp=1):
+                       init_vaccine, vacc_out, vacc_pri, gdp, age_group=16, verbose_load=False, verbose_modify=False,
+                       verbose_simulation=False, simulation_disp=1):
     # load basic data
     age_enum = get_ages(age_group_num=age_group)
     areacode = get_areas()
@@ -79,6 +82,15 @@ def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_
     if verbose_load:
         print(policy_origin)
 
+    # load GDP
+    gdp_per = 0.0
+    if select_iso3 not in gdp.keys():
+        print('Warning: GDP File Incomplete! Will use all 0.0 instead')
+    else:
+        gdp_per = gdp[select_iso3]
+    if verbose_load:
+        print(gdp_per)
+
     # modify contact through mobility/policy
     contact_modify = get_contact_modify(contact_origin, time_length, start_date, mobility_origin, policy_origin)
     if verbose_modify:
@@ -87,11 +99,18 @@ def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_
     # modify(or more correct, calculate) init compartment values
     init_compartment_value = {}
     for age_i in age_enum:
-        init = init_vaccine[age_i]
+        init = init_vaccine[age_i].copy()
         popu_sum = init_people[age_i]
         for comp in init.keys():
             init[comp] *= popu_sum / 10000.0
         init_compartment_value[age_i] = init
+
+    # modify(or more correct, calculate) vaccine values
+    vaccine_plan = get_vaccine_plan(age_enum, init_compartment_value, time_length, vacc_out, vacc_pri)
+    if vaccine_plan is None:
+        return None
+    if verbose_modify:
+        print(vaccine_plan)
 
     # create model
     enat = epi_non_area_time
@@ -101,6 +120,16 @@ def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_
                       _gamma_s=enat['gamma_s'], _gamma_c=enat['gamma_c'])
 
     # simulate model
+    results = {}
+    for age in age_enum:
+        results[age] = {}
+        for compartment in init_compartment_value[age].keys():
+            results[age][compartment] = [init_compartment_value[age][compartment]]
+
+    dailynew_eval = {}
+    for age in age_enum:
+        dailynew_eval[age] = {'E': [], 'Ic': []}
+
     for index in range(time_length):
         if verbose_simulation and index % simulation_disp == 0:
             print('days: ', index)
@@ -119,17 +148,32 @@ def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_
                 lambda_i += contact_modify[age_i][age_j][index] * lambda_j / popu_j
             lambda_i *= u_i
             model[age_i].reset_parameters('lambda', lambda_i)
+            model[age_i].reset_parameters('v', vaccine_plan[age_i][index])
 
-            executor.simulate_step(index)
+            dailynew_eval_item = executor.simulate_step(index, ['E', 'Ic'])
             values = model[age_i].get_values()
+
+            for compartment in values.keys():
+                results[age_i][compartment].append(values[compartment])
+
+            dailynew_eval[age_i]['E'].append(dailynew_eval_item['E'])
+            dailynew_eval[age_i]['Ic'].append(dailynew_eval_item['Ic'])
+
             if verbose_simulation and index % simulation_disp == 0:
                 print('ages: ', age_i, ' ', values)
+    return results, dailynew_eval, vaccine_plan, gdp_per
 
 
 if __name__ == '__main__':
-    time_length = 90
+    vacc_out_pool = ['less', 'normal', 'more', 'most']
+    vacc_pri_pool = ['V+', 'V20', 'V60', 'V75']
+    time_length = 180
     start_date = '20200801'
     select_area = 'United Kingdom'
-    popu, epi1, contact, init_vacc, mobility, policy = dataloader_OHEI_model()
-    execute_OHEI_model(start_date, time_length, select_area, popu, epi1, contact, mobility, policy, init_vacc,
-                       verbose_simulation=True, simulation_disp=5)
+    vacc_out = vacc_out_pool[1]
+    vacc_pri = vacc_pri_pool[3]
+
+    popu, epi1, contact, init_vacc, mobility, policy, gdp = dataloader_OHEI_model()
+    results, dailynew, vp, gdp = execute_OHEI_model(start_date, time_length, select_area, popu, epi1, contact, mobility,
+                                                    policy, init_vacc, vacc_out, vacc_pri, gdp)
+    print(results)

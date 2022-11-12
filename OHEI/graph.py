@@ -15,6 +15,7 @@ def get_eqs():
     add_path(graph, 'R', 'S')
     add_path(graph, 'E', 'Is')
     add_path(graph, 'Is', 'R')
+
     model = Model('OHEI', graph)
     return model
 

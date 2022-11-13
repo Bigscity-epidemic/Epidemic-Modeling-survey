@@ -4,7 +4,7 @@ def get_HC(death_age, gdp):
         age_start = float(age[:2].replace('-', ''))
         if age_start == 75:
             age_start = 80
-        LEdisc[age] = 3.5 * (age_start ** 0.5)
+        LEdisc[age] = 3.5 * ((100 - age_start) ** 0.5)
 
     HC_age = {}
     HC_loss = 0.0

@@ -4,7 +4,7 @@ def get_cQALY(death_age, infected_age, vaccine_plan):
         age_start = float(age[:2].replace('-', ''))
         if age_start == 75:
             age_start = 80
-        adjQALEdisc[age] = 3 * (age_start ** 0.5)
+        adjQALEdisc[age] = 3 * ((100 - age_start) ** 0.5)
     mean_QALYloss_symptom = 0.0307
     mean_QALYloss_AEFI = 1.0
     AEFI_probability = 0.5

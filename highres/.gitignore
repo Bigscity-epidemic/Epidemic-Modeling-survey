@@ -1,0 +1,8 @@
+__pycache__/
+result/*.pdf
+result/*.xlsx
+result/*.rar
+.ipynb_checkpoints
+.vscode
+*.ipynb
+code/*.ipynb

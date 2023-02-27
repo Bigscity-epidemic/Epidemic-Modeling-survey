@@ -33,7 +33,6 @@ ct_ratio = settings['base_ct_ratio']
 contact_ratio = settings['base_contact_ratio']
 income = settings['income_x']
 s0 = settings['s0']
-weather = [16, 22, 27, 29, 29, 29, 29, 29]
 
 i0 = 1.0
 model = get_model(r0, hidden, infect, confirm, sym_ratio, ct_ratio, remove, income, contact_ratio, s0, i0)
@@ -102,7 +101,6 @@ for index in range(future):
             model.name2compartments['P'].value -= tmp
             model.name2compartments['Is'].value += tmp
 
-    model.reset_parameters('betaI', r0 * (weather[int(index / 30)] + 273) / (25 + 273))
     executor.simulate_step(index)
     values = model.get_values()
     for compartment in values.keys():

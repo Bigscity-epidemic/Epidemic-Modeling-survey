@@ -167,7 +167,7 @@ def execute_OHEI_model(start_date, time_length, select_area, popu, epi_non_area_
 if __name__ == '__main__':
     vacc_out_pool = ['less', 'normal', 'more', 'most']
     vacc_pri_pool = ['V+', 'V20', 'V60', 'V75']
-    time_length = 180
+    time_length = 3
     start_date = '20200801'
     select_area = 'United Kingdom'
     vacc_out = vacc_out_pool[1]

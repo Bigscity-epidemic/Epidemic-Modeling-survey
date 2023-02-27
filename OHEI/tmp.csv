@@ -1,0 +1,20 @@
+Evaluation Index,mortality,morbidity,cLE,cQALY,HC
+R1,V75,V+V20,V75,V+V20,V75
+R2,V75,V20,V60V75,V+V20,V75
+R3,V75,V20,V60,V+,V75
+R4,V60,V20,V60,V+,V60
+不关心国家差异/只有一个国家
+
+Evaluation Index,UK,US,france,afghan,china
+R1,V75,V+V20,V75,V+V20,V75
+R2,V75,V20,V60V75,V+V20,V75
+R3,V75,V20,V60,V+,V75
+R4,V60,V20,V60,V+,V60
+不关心指标差异/只有一个指标
+
+Evaluation Index,UK,US,france,afghan,china
+mortality,V75,V+V20,V75,V+V20,V75
+morbidity,V75,V20,V60V75,V+V20,V75
+cLE,V75,V20,V60,V+,V75
+cQALY,V60,V20,V60,V+,V60
+不关心场景差异/只有一个场景
